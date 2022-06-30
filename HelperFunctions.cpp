@@ -112,10 +112,12 @@ void bookTicket(user &u){
     ifstream fin; flight f;
     fin.open("Flights.dat",ios::binary);
     fin.read((char*)&f,sizeof(f));
-    if(fin){
-        if(f.searchFlight(to,from)) {cout << "Ticket Successfully Booked." << endl;u.updatefNo(f);return;}
+    while(fin){
+        if(f.searchFlight(to,from)) {cout << "Ticket Successfully Booked." << endl;u.updatefNo(f);fin.close();return;}
+        fin.read((char*)&f,sizeof(f));
     }
     cout << "\tFlight Not Found. Ticket Can't be obtained." << endl;
+    fin.close();
 
 }
 void cancelTicket(user& u){

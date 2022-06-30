@@ -3,7 +3,7 @@
 #include "user.cpp"
 #include "helperFunctions.cpp"
 using namespace std;
-void UserMenu(){
+void UserMenu(user &u){
     int choice;
 
     while(1){
@@ -17,12 +17,12 @@ void UserMenu(){
         cout << " 6. Exit." << "\n";
         cout << "Enter Your Choice: "; cin >> choice;
         switch(choice){
-            case 1: {break;}
-            case 2: {break;}
-            case 3: {break;}
-            case 4: {break;}
-            case 5: {break;}
-            case 6: {return;}
+            case 1: {displayAllFlight();fflush(stdin);char e=getchar();break;}
+            case 2: {displaySpecificFlight();fflush(stdin);char e=getchar(); break;}
+            case 3: {bookTicket(u);fflush(stdin);char e=getchar();break;}
+            case 4: {cancelTicket(u);fflush(stdin);char e = getchar();break;}
+            case 5: {displayTicket(u);break;}
+            case 6: {updateUser(u);return;}
             default: { cout << "Invalid Choice."; fflush(stdin); int c=getchar();}
         }
     }
@@ -38,9 +38,9 @@ void AdminMenu(){
         cout << " 4. Return to Main Menu. " << "\n"; 
         cout << " Enter Your Choice: "; cin >> choice;
         switch(choice){
-            case 1: {break;}
-            case 2: {break;}
-            case 3: {break;}
+            case 1: {insertFlight();break;}
+            case 2: {deleteSpecificFlight();fflush(stdin);char e=getchar();break;}
+            case 3: {deleteAllFlight();break;}
             case 4: {return;}
             default: { cout << "Invalid Choice."; fflush(stdin); int c=getchar();}
         }
@@ -58,12 +58,28 @@ void MainMenu(){
         cout << " Enter Your Choice: "; cin >> choice;
         switch(choice){
             case 1: {
-                AdminMenu();break;
+                string username,password;
+                cout << "Enter Username : "; cin >> username;
+                cout << "Enter Password : "; cin >> password;
+                if(username == "admin" && password == "admin") AdminMenu();
+                else {cout << "\t Wrong Credientals. " << endl;fflush(stdin);char e=getchar();}
+                break;
             }
             case 2: {
-                UserMenu();break;
+                int passNo;
+                char password[20];
+                cout << "Enter Your Passport No : "; cin >> passNo;
+                cout << "Enter Your Password : "; cin >> password;
+                pair<bool,user> flag = userLogin(passNo,password);
+                if(flag.first) UserMenu(flag.second);
+                else {cout << " Wrong Credientals." << "\n";fflush(stdin);char e=getchar();}
+
+                break;
             }
-            case 3: { break;}
+            case 3: {
+                addNewUser(); // With Unique Passport Number
+                break;
+            }
             case 4: {system("CLS"); cout << "Thanks for using our Service." << endl; return;}
             default: { cout << "Invalid Choice."; fflush(stdin);int c=getchar();}
         }

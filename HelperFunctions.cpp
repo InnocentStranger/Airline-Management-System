@@ -45,10 +45,12 @@ void displaySpecificFlight(){
     ifstream fin; flight f;
     fin.open("Flights.dat",ios::binary);
     fin.read((char*)&f,sizeof(f));
-    if(fin){
-        if(f.searchFlight(to,from)) {f.displayFlightDetails();return;}
+    while(fin){
+        if(f.searchFlight(to,from)) {f.displayFlightDetails();fin.close();return;}
+        fin.read((char*)&f,sizeof(f));
     }
     cout << "\tFlight Not Found. " << endl;
+    fin.close();
 }
 void displayAllFlight(){
     system("CLS");

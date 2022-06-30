@@ -29,7 +29,7 @@ using namespace std;
        setw(15) << cost << " " << endl;
     }
     bool flight::searchFlight(char to[],char from[]){
-            if(strcmp(this->to,to)==0 && strcmp(this->from,from)==0) return true;
+            if((strcmpi(this->to,to)==0) && (strcmpi(this->from,from)==0))return true;
             return false;
     }
     bool flight::operator == (flight &f){

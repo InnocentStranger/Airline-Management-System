@@ -25,21 +25,38 @@ void user::enterUserInfo(){
     cout << "Enter Phone No : "; cin >> phoneNo;
     cout << "Set Password : "; cin >> password;
 }        
-bool user::login(int passNo,string password){
-    if(this -> passNo == passNo && this->password == password) return true;
+bool user::login(int passNo,char password[]){
+    if(this -> passNo == passNo && strcmp(this->password,password)==0) return true;
             return false;
 }
 //Function To display Ticket Of Passenger
 void user::displayUserInfo(flight &f){
     system("CLS");
+	string s; s+="TO : "; s+=f.to;
+	string str; str+= "Passenger's Name : "; str+= fname; str += " "; str += lname;
+	string fstr; fstr += "Flight No : "; fstr += to_string(f.fNo);
 	cout << "\t" << setw(60) << center("***Passenger's Ticket***", 60) << endl;
 	cout << "\t"; for (int i = 0; i < 60; i++) cout << "-"; cout << endl;
-	cout << "\t"; cout << left  << "Passenger's Name : " << fname << " " << lname << endl;
+	cout << "\t"; cout << left  << setw(40) << str << right << setw(20) << fstr << endl;
 	cout << "\t"; for (int i = 0; i < 60; i++) cout << "-"; cout << endl;
 	cout << "\t"; cout << left << "Passport No : " << passNo << endl;
-	cout << "\t"; cout << left << "From : " << setw(23) << f.from << right << setw(30) << "TO : " << left << f.to << endl;
+	cout << "\t"; cout << left << "From : " << setw(23) << f.from << right << setw(30) << s << endl;
 	cout << "\t"; for (int i = 0; i < 60; i++) cout << "*"; cout << endl;
 	cout << "\t" << setw(60) << center("Thank You For Using Our Service.", 60) << endl;
 	cout << "\t"; for (int i = 0; i < 60; i++) cout << "*"; cout << endl;
+	fflush(stdin);char e=getchar();
+}
+bool user::operator == (user const &obj){
+	if(obj.passNo == this->passNo) return true;
+    return false;
+}
+void user::updatefNo(flight& f){
+	this->fNo = f.fNo;
+}
+void user::updatefNo(int fNo){
+	this->fNo = fNo;
+}
+int user::retrieve(){
+	return this->fNo;
 }
 #endif
